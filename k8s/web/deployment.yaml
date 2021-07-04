@@ -14,7 +14,7 @@ spec:
     spec:
       containers: 
         - name: movies
-          image: lportinari/rotten-potatoes:v3
+          image: lportinari/rotten-potatoes:latest
           ports:
             # Mesma porta exposta no Dockerfile
             - containerPort: 5000 
