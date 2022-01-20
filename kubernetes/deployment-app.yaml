@@ -1,0 +1,47 @@
+# Deployment da aplicação
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rotten-potatoes
+spec:
+  selector:
+    matchLabels:
+      app: rotten-potatoes
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: rotten-potatoes
+    spec:
+      containers:
+        - name: rotten-potatoes
+          image: lportinari/rottenpotatoes:v1
+          env:
+            - name: MONGODB_DB
+              value: admin
+            - name: MONGODB_HOST
+              value: mongo-db 
+            - name: MONGODB_PORT
+              value: "27017"
+            - name: MONGODB_USERNAME
+              value: "db-username"
+            - name: MONGODB_PASSWORD
+              value: "db-password"
+          ports:
+            - containerPort: 5000
+
+---
+# Service app
+apiVersion: v1
+kind: Service
+metadata:
+  name: rotten-potatoes
+spec: 
+  selector:
+    app: rotten-potatoes
+  ports:
+    - port: 80
+      targetPort: 5000
+  type: LoadBalancer
+
+          
